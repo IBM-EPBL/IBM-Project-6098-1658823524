@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Welcome To Login Form</title>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
+  <!-- Complete css for whole page. -->
+  <style type="text/css">
+    /* body css for whole page */
+    body {
+      margin: 0px;
+      background-color: black;
+      color: #f9fcf5;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body.login {
+      background-image: url(https://images.unsplash.com/photo-1634468413956-831adf9d5a06?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    #main {
+      max-width: 600px;
+      height: 260px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 5px;
+      padding-left: 10px;
+      margin-top: 100px;
+      border-top: 3px double #f1f1f1;
+      border-bottom: 3px double #f1f1f1;
+      border-right: 3px double #f1f1f1;
+      border-left: 3px double #f1f1f1;
+      padding-top: 20px;
+      background: #fff;
+    }
+
+    #main table {
+      font-family: "Comic Sans MS", cursive;
+    }
+
+    /* css code for textbox */
+    #main .tb {
+      height: 28px;
+      border: 1px solid #262b28;
+      font-weight: bold;
+      opacity: 0.9;
+      padding: 0 10px;
+    }
+
+
+
+    /* css code for button*/
+    #main .btn {
+      width: 60%;
+      height: 32px;
+      outline: none;
+      font-weight: bold;
+      border: 0px solid #27a465;
+      text-shadow: 0px 0.5px 0.5px #fff;
+      border-radius: 2px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: 1px;
+      font-size: 14px;
+      background-color: black;
+      -webkit-transition: 1s;
+      -moz-transition: 1s;
+      transition: 1s;
+    }
+
+    #main .btn:hover {
+      background-color: white;
+      outline: none;
+      border-radius: 2px;
+      color: black;
+      border: 1px solid black;
+      -webkit-transition: 1s;
+      -moz-transition: 1s;
+      transition: 1s;
+    }
+
+    #temprature-section,
+    .w3-container {
+      margin-top: 30px;
+      background-color: black;
+      width: 100vw;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    #GasSensor.show {
+      justify-content: space-around;
+    }
+
+    @media (max-width: 600px) {
+      #GasSensor {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      body.login {
+        background-repeat: repeat;
+      }
+    }
+
+    #temperature-infos {
+      margin-top: 10px;
+    }
+
+    .info-section {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .indicator {
+      width: 10px;
+      height: 10px;
+      background: red;
+      border-radius: 100%;
+    }
+
+
+    .w3-black {
+      background-color: black;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
