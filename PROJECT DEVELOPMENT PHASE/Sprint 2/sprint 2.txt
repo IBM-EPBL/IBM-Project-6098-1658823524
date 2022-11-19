@@ -1,0 +1,534 @@
+
+      fetch("https://rest.nexmo.com/sms/json", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    }
+
+  </script>
+  <!-- Javascript ending here.. -->
+</head>
+
+<body class="login">
+  <div id="main" class="login-page">
+    <div class="h-tag">
+      <h2>
+        <center style="color: black;">Login Form</center>
+      </h2>
+    </div>
+    <div class="login">
+      <table cellspacing="2" align="center" cellpadding="8" border="0">
+        <tr>
+          <td style="color: black;">User Name :</td>
+          <td><input type="text" placeholder="Enter User Name" id="email" class="tb" /></td>
+        </tr>
+        <tr>
+          <td style="color: black;">Password :</td>
+          <td><input type="password" placeholder="Enter Password" id="pwd1" class="tb" /></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <input type="submit" value="Login" class="btn" onClick="login()" />
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="chart-page" style="display: none;">
+    <h1 style="text-align: center;">FIRE ALARM APP</h1>
+
+    <div class="alerting">
+      FIRE ALERT !!!... THE FIRE ALERT HAS BEEN ACTIVATED IN THE CANTEEN AREA OF THE OFFICE PLEASE LEAVE THE BUILDING
+      IMMEDIATELY
+      <div class="info-msg">SMS SENT SUCCESSFULLY ON YOUR MOBILE NUMBER : XX-XXXX-4052. 
+        IF YOU DID NOT RECEIVE MESSAGE, PLEASE ENABLE CROSS ORIGIN BY INSTALLING PLUGIN <a target="_blank" 
+        href="https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en">Click Here</a></div>
+    </div>
+
+    <div class="w3-bar w3-black">
+      <button class="w3-bar-item w3-button tablink active" onclick="openTab(event,'Temperature')">Temperature</button>
+      <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'GasSensor')">Gas Sensor</button>
+    </div>
+
+    <div id="Temperature" class="w3-container w3-border active">
+      <div id="temprature-section">
+        <div id="body-section" style="width: 300px;">
+          <header style="font-size: 30px; text-align: center; margin-bottom: 30px; ">Temperature</header>
+          <div id="temperature-chart-container" style="width: 300px; height: 300px; text-align: center;">
+
+          </div>
+          <div id="temperature-infos">
+            <div class="info-section">
+              <div class="label">Water Sprinkler</div>
+              <div class="indicator"></div>
+            </div>
+            <div class="info-section">
+              <div class="label">Fire Alarm</div>
+              <div class="indicator"></div>
+            </div>
+            <div class="info-section">
+              <div class="label">Exhaust Fan</div>
+              <div class="indicator"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="GasSensor" class="w3-container w3-border city">
+      <div id="n2o-section">
+        <div id="body-section" style="width: 300px;">
+          <header style="font-size: 30px; text-align: center; margin-bottom: 30px; ">Nitrogen di Oxide</header>
+          <div id="n2o-chart-container" style="width: 300px; height: 300px; text-align: center;">
+
+          </div>
+
+        </div>
+      </div>
+      <div id="cmo-section">
+        <div id="body-section" style="width: 300px;">
+          <header style="font-size: 30px; text-align: center; margin-bottom: 30px; ">Carbon Mono Oxide</header>
+          <div id="cmo-chart-container" style="width: 300px; height: 300px; text-align: center;">
+
+          </div>
+
+        </div>
+      </div>
+      <div id="co2-section">
+        <div id="body-section" style="width: 300px;">
+          <header style="font-size: 30px; text-align: center; margin-bottom: 30px; ">Carbon di Oxide </header>
+          <div id="co2-chart-container" style="width: 300px; height: 300px; text-align: center;">
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Main div ending here... -->
+  <script>
+      function openTab(evt, cityName) {
+        $(".w3-container,.w3-button").removeClass("active");
+        $(evt.target).addClass("active");
+        $(`#${cityName}`).addClass("active");
+      }
+
+      function temperatureChart() {
+
+        var dom = document.getElementById('temperature-chart-container');
+        var myChart = echarts.init(dom, 'dark', {
+          renderer: 'canvas',
+          useDirtyRect: false
+        });
+        var app = {};
+
+        var option;
+
+        option = {
+          series: [
+            {
+              type: 'gauge',
+              center: ['50%', '60%'],
+              startAngle: 200,
+              endAngle: -20,
+              min: 0,
+              max: 60,
+              splitNumber: 12,
+              itemStyle: {
+                color: '#FFAB91'
+              },
+              progress: {
+                show: true,
+                width: 30
+              },
+              pointer: {
+                show: false
+              },
+              axisLine: {
+                lineStyle: {
+                  width: 30
+                }
+              },
+              axisTick: {
+                distance: -45,
+                splitNumber: 5,
+                lineStyle: {
+                  width: 2,
+                  color: '#999'
+                }
+              },
+              splitLine: {
+                distance: -52,
+                length: 14,
+                lineStyle: {
+                  width: 3,
+                  color: '#999'
+                }
+              },
+              axisLabel: {
+                distance: -20,
+                color: '#999',
+                fontSize: 20
+              },
+              anchor: {
+                show: false
+              },
+              title: {
+                show: false
+              },
+              detail: {
+                valueAnimation: true,
+                width: '60%',
+                lineHeight: 40,
+                borderRadius: 8,
+                offsetCenter: [0, '-15%'],
+                fontSize: 30,
+                fontWeight: 'bolder',
+                formatter: '{value} °C',
+                color: 'auto'
+              },
+              data: [
+                {
+                  value: 30
+                }
+              ]
+            },
+            {
+              type: 'gauge',
+              center: ['50%', '60%'],
+              startAngle: 200,
+              endAngle: -20,
+              min: 0,
+              max: 60,
+              itemStyle: {
+                color: '#FD7347'
+              },
+              progress: {
+                show: true,
+                width: 8
+              },
+              pointer: {
+                show: false
+              },
+              axisLine: {
+                show: false
+              },
+              axisTick: {
+                show: false
+              },
+              splitLine: {
+                show: false
+              },
+              axisLabel: {
+                show: false
+              },
+              detail: {
+                show: false
+              },
+              data: [
+                {
+                  value: 30
+                }
+              ]
+            }
+          ]
+        };
+        setInterval(function () {
+          const random = Math.floor(Math.random() * 5) + 30;
+          myChart.setOption({
+            series: [
+              {
+                data: [
+                  {
+                    value: random
+                  }
+                ]
+              },
+              {
+                data: [
+                  {
+                    value: random
+                  }
+                ]
+              }
+            ]
+          });
+        }, 2000);
+
+        if (option && typeof option === 'object') {
+          myChart.setOption(option);
+        }
+
+        window.addEventListener('resize', myChart.resize);
+      }
+
+      function n2oGasCensorChart() {
+
+        var dom = document.getElementById('n2o-chart-container');
+        var myChart = echarts.init(dom, 'dark', {
+          renderer: 'canvas',
+          useDirtyRect: false
+        });
+        var app = {};
+
+        var option;
+        option = {
+          series: [
+            {
+              type: 'gauge',
+              axisLine: {
+                lineStyle: {
+                  width: 30,
+                  color: [
+                    [0.3, '#67e0e3'],
+                    [0.7, 'orange'],
+                    [1, '#fd666d']
+                  ]
+                }
+              },
+              pointer: {
+                itemStyle: {
+                  color: 'auto'
+                }
+              },
+              axisTick: {
+                distance: -30,
+                length: 8,
+                lineStyle: {
+                  color: '#fff',
+                  width: 2
+                }
+              },
+              splitLine: {
+                distance: -30,
+                length: 30,
+                lineStyle: {
+                  color: '#fff',
+                  width: 4
+                }
+              },
+              axisLabel: {
+                color: 'auto',
+                distance: 40
+              },
+              detail: {
+                valueAnimation: true,
+                formatter: '{value} °C',
+                color: 'auto',
+                fontSize: 14
+              },
+              data: [
+                {
+                  value: 85
+                }
+              ]
+            }
+          ]
+        };
+        setInterval(function () {
+          myChart.setOption({
+            series: [
+              {
+                data: [
+                  {
+                    value: Math.floor(Math.random() * 5) + 80
+                  }
+                ]
+              }
+            ]
+          });
+        }, 2000);
+
+        if (option && typeof option === 'object') {
+          myChart.setOption(option);
+        }
+
+        window.addEventListener('resize', myChart.resize);
+      }
+
+      function cmoGasCensorChart() {
+
+        var dom = document.getElementById('cmo-chart-container');
+        var myChart = echarts.init(dom, 'dark', {
+          renderer: 'canvas',
+          useDirtyRect: false
+        });
+        var app = {};
+
+        var option;
+        option = {
+          series: [
+            {
+              type: 'gauge',
+              axisLine: {
+                lineStyle: {
+                  width: 30,
+                  color: [
+                    [0.3, '#67e0e3'],
+                    [0.7, 'orange'],
+                    [1, '#fd666d']
+                  ]
+                }
+              },
+              pointer: {
+                itemStyle: {
+                  color: 'auto'
+                }
+              },
+              axisTick: {
+                distance: -30,
+                length: 8,
+                lineStyle: {
+                  color: '#fff',
+                  width: 2
+                }
+              },
+              splitLine: {
+                distance: -30,
+                length: 30,
+                lineStyle: {
+                  color: '#fff',
+                  width: 4
+                }
+              },
+              axisLabel: {
+                color: 'auto',
+                distance: 40
+              },
+              detail: {
+                valueAnimation: true,
+                formatter: '{value} °C',
+                color: 'auto',
+                fontSize: 14
+              },
+              data: [
+                {
+                  value: 30
+                }
+              ]
+            }
+          ]
+        };
+        setInterval(function () {
+          myChart.setOption({
+            series: [
+              {
+                data: [
+                  {
+                    value: Math.floor(Math.random() * 5) + 50
+                  }
+                ]
+              }
+            ]
+          });
+        }, 2000);
+
+        if (option && typeof option === 'object') {
+          myChart.setOption(option);
+        }
+
+        window.addEventListener('resize', myChart.resize);
+      }
+
+      function co2GasCensorChart() {
+
+        var dom = document.getElementById('co2-chart-container');
+        var myChart = echarts.init(dom, 'dark', {
+          renderer: 'canvas',
+          useDirtyRect: false
+        });
+        var app = {};
+
+        var option;
+        option = {
+          series: [
+            {
+              type: 'gauge',
+              axisLine: {
+                lineStyle: {
+                  width: 30,
+                  color: [
+                    [0.3, '#67e0e3'],
+                    [0.7, 'orange'],
+                    [1, '#fd666d']
+                  ]
+                }
+              },
+              pointer: {
+                itemStyle: {
+                  color: 'auto'
+                }
+              },
+              axisTick: {
+                distance: -30,
+                length: 8,
+                lineStyle: {
+                  color: '#fff',
+                  width: 2
+                }
+              },
+              splitLine: {
+                distance: -30,
+                length: 30,
+                lineStyle: {
+                  color: '#fff',
+                  width: 4
+                }
+              },
+              axisLabel: {
+                distance: 40,
+                fontSize: 10
+              },
+              detail: {
+                valueAnimation: true,
+                formatter: '{value} °C',
+                color: 'auto',
+                fontSize: 14
+              },
+              data: [
+                {
+                  value: 78
+                }
+              ]
+            }
+          ]
+        };
+        setInterval(function () {
+          myChart.setOption({
+            series: [
+              {
+                data: [
+                  {
+                    value: Math.floor(Math.random() * 10) + 75
+                  }
+                ]
+              }
+            ]
+          });
+        }, 2000);
+
+        if (option && typeof option === 'object') {
+          myChart.setOption(option);
+        }
+
+        window.addEventListener('resize', myChart.resize);
+      }
+
+      temperatureChart();
+
+      function gasCensor() {
+        n2oGasCensorChart();
+        cmoGasCensorChart();
+        co2GasCensorChart();
+      }
+
+      gasCensor();
+
+  </script>
+</body>
+
+</html>
